@@ -1,0 +1,66 @@
+.v-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.v-button:active {
+  transform: scale(0.98);
+}
+
+/* Variants */
+.v-button-primary {
+  background: var(--text-primary);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.v-button-primary:hover {
+  background: #1a202c;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.v-button-secondary {
+  background: #ffffff;
+  color: var(--text-primary);
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.v-button-secondary:hover {
+  background: #f7fafc;
+  border-color: rgba(0,0,0,0.1);
+}
+
+/* Accent for call to action */
+.v-button-accent {
+  background: #7395db;
+  color: white;
+}
+.v-button-accent:hover {
+  background: #5a7ec4;
+}
+
+/* Sizes */
+.v-button-sm {
+  padding: 6px 16px;
+  font-size: var(--font-sm);
+}
+
+.v-button-md {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-base);
+}
+
+.v-button-lg {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-lg);
+}
