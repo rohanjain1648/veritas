@@ -8,7 +8,6 @@ import { PublicNavbar } from './components/PublicNavbar';
 import { PublicFooter } from './components/PublicFooter';
 
 export function LandingPage() {
-  const { theme, toggleTheme } = useTheme();
 
   const fadeUp = {
     hidden: { opacity: 0, y: 30 },

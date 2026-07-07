@@ -11,11 +11,21 @@ import { StudentDisclosures } from './pages/StudentDisclosures';
 import { AdminPortal } from './pages/AdminPortal';
 import { AdminCases } from './pages/AdminCases';
 import { AdminFaculty } from './pages/AdminFaculty';
-import {
-  EvidenceEnginePage, SecurityPage, PedagogicalGuidesPage, IntegrationsPage,
-  DocumentationPage, APIReferencePage, CaseStudiesPage, BlogPage, AboutUsPage,
-  CareersPage, ContactPage, PartnersPage, PrivacyPage, TermsPage, CookiesPage
-} from './pages/PublicPages';
+import { EvidenceEnginePage } from './pages/EvidenceEnginePage';
+import { SecurityPage } from './pages/SecurityPage';
+import { PedagogicalGuidesPage } from './pages/PedagogicalGuidesPage';
+import { IntegrationsPage } from './pages/IntegrationsPage';
+import { DocumentationPage } from './pages/DocumentationPage';
+import { APIReferencePage } from './pages/APIReferencePage';
+import { CaseStudiesPage } from './pages/CaseStudiesPage';
+import { BlogPage } from './pages/BlogPage';
+import { AboutUsPage } from './pages/AboutUsPage';
+import { CareersPage } from './pages/CareersPage';
+import { ContactPage } from './pages/ContactPage';
+import { PartnersPage } from './pages/PartnersPage';
+import { PrivacyPage } from './pages/PrivacyPage';
+import { TermsPage } from './pages/TermsPage';
+import { CookiesPage } from './pages/CookiesPage';
 
 function App() {
   return (
