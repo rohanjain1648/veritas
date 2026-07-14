@@ -72,10 +72,48 @@ def generate_workflow_diagram():
     output_path = dot.render('workflow_diagram', view=False)
     print(f"Generated Workflow Diagram: {output_path}")
 
+def generate_mvp_workflow_diagram():
+    dot = graphviz.Digraph('VeritasAI_MVP_Workflow', comment='MVP Platform Features and Workflow', format='png')
+    dot.attr(rankdir='TB', splines='polyline')
+    dot.attr('node', fontname='Helvetica', shape='box', style='filled', borderRadius='8')
+
+    # Styles & Palettes
+    node_styles = {
+        'engine': {'fillcolor': '#d2e4f9', 'color': '#3182ce', 'label': 'AI-Content Analysis Engine\n- Multi-method scan (OpenAI, GPTZero)\n- Stylometric Writing DNA baseline\n- Citation Hallucination verification\n- Passage-level highlighting'},
+        'dashboard': {'fillcolor': '#ebf8ff', 'color': '#2b6cb0', 'label': 'Faculty Dashboard\n- Flagged triage queue\n- Writing history comparison\n- Accept/Dismiss action log\n- Notes & Clarification request tool'},
+        'student': {'fillcolor': '#faf5ff', 'color': '#6b46c1', 'label': 'Student Transparency & Support\n- Dynamic flag notifications\n- Process explanation portal\n- AI Disclosure form (MRU/UCalgary)\n- Contest & Resubmission window'},
+        'intervention': {'fillcolor': '#fffaf0', 'color': '#dd6b20', 'label': 'Intervention Workflow\n- Remedial writing tasks\n- 5-Min Oral Defense scheduler\n- Educational academic integrity modules\n- Full intervention action logging'},
+        'analytics': {'fillcolor': '#f0fff4', 'color': '#38a169', 'label': 'Analytics & Reporting\n- Course/Program flag aggregations\n- AI usage trend timelines\n- Inform syllabus policy updates\n- Highlight faculty literacy training needs'},
+        'compliance': {'fillcolor': '#edf2f7', 'color': '#4a5568', 'label': 'Compliance & Privacy\n- Secure, local data storage\n- No external text retention\n- Institutional opt-out management\n- Strict data sharing boundaries'}
+    }
+
+    # Add Nodes
+    dot.node('Start', 'Student Submits Assignment\n(Optional pre-disclosure of AI)', shape='ellipse', fillcolor='#e6fffa', color='#319795', style='filled')
+    
+    for node_id, attrs in node_styles.items():
+        dot.node(node_id, attrs['label'], fillcolor=attrs['fillcolor'], color=attrs['color'])
+        
+    dot.node('End', 'Intervention Complete & Resolved\n(Data Logged for Analytics)', shape='ellipse', fillcolor='#e6fffa', color='#319795', style='filled')
+
+    # Edges mapping the workflow
+    dot.edge('Start', 'engine', label=' Trigger scan')
+    dot.edge('engine', 'compliance', label=' Validate storage compliance', style='dashed')
+    dot.edge('engine', 'dashboard', label=' Populate queue')
+    dot.edge('dashboard', 'student', label=' Request explanation/disclosure')
+    dot.edge('student', 'intervention', label=' If student struggles or admits misuse')
+    dot.edge('student', 'dashboard', label=' Cleared via contest/resubmission')
+    dot.edge('intervention', 'End', label=' Log intervention outcomes')
+    dot.edge('dashboard', 'analytics', label=' Aggregate statistics')
+    dot.edge('intervention', 'analytics', label=' Aggregate outcomes')
+
+    output_path = dot.render('mvp_workflow_diagram', view=False)
+    print(f"Generated MVP Workflow Diagram: {output_path}")
+
 if __name__ == '__main__':
     try:
         generate_architecture_diagram()
         generate_workflow_diagram()
+        generate_mvp_workflow_diagram()
         print("Successfully generated all Graphviz flowcharts.")
     except graphviz.backend.execute.ExecutableNotFound:
         print("\nERROR: Graphviz system executable not found!")

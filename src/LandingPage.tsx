@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Search, BookOpen, Fingerprint, History } from 'lucide-react';
-import './LandingPage.css';
+import { Search, BookOpen, Fingerprint, History, ChevronDown, CheckCircle2 } from 'lucide-react';
 import { Hero3D } from './components/Hero3D';
 import { PublicNavbar } from './components/PublicNavbar';
 import { PublicFooter } from './components/PublicFooter';
 
 export function LandingPage() {
+  const [activeAccordion, setActiveAccordion] = useState<number | null>(0);
 
   const fadeUp = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
   };
 
   const staggerContainer = {
@@ -23,163 +23,224 @@ export function LandingPage() {
   };
 
   return (
-    <div className="landing-wrapper">
-      <div className="aurora-bg"></div>
-      <div className="grid-overlay"></div>
+    <div className="relative min-h-screen bg-brand-dark text-white overflow-hidden font-sans selection:bg-brand-chartreuse selection:text-brand-dark">
+      {/* Background Elements */}
+      <div className="neon-glow top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+      <div className="fixed inset-0 z-[-2] opacity-20" style={{ backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '60px 60px' }}></div>
       
-      {/* 3D Hero Background */}
-      <div className="hero-3d-container">
-        <Hero3D />
-      </div>
-
       {/* Navigation */}
       <PublicNavbar />
 
-      {/* Hero Section */}
-      <motion.section 
-        className="container hero"
-        initial="hidden"
-        animate="visible"
-        variants={staggerContainer}
-      >
-        <motion.div className="hero-ornament" variants={fadeUp}>
-          <svg width="60" height="20" viewBox="0 0 60 20" fill="none">
-            <path d="M30 10C25 10 20 0 10 0C4.5 0 0 4.5 0 10C0 15.5 4.5 20 10 20C20 20 25 10 30 10ZM30 10C35 10 40 0 50 0C55.5 0 60 4.5 60 10C60 15.5 55.5 20 50 20C40 20 35 10 30 10Z" fill="#a0aec0" opacity="0.5"/>
-          </svg>
-        </motion.div>
-        <motion.p className="hero-eyebrow" variants={fadeUp}>Academic Trust Platform</motion.p>
-        <motion.h1 className="hero-title" variants={fadeUp}>
-          Veritas AI for Higher Education
-        </motion.h1>
-        <motion.p className="hero-subtitle" variants={fadeUp}>
-          Built on pedagogical collaboration. Powered by explainable evidence.<br/>
-          Delivering transparent academic integrity.
-        </motion.p>
-        <motion.div className="hero-actions" variants={fadeUp}>
-          <button className="btn-dark">Sign up</button>
-          <button className="btn-white">Contact Us</button>
-        </motion.div>
-        
-        {/* Trusted By (Logos) */}
-        <motion.div className="trusted-by" variants={fadeUp}>
-          <p>UNIVERSITIES BUILD WITH VERITAS</p>
-          <div className="trusted-logos">
-            <div className="logo-placeholder">UCalgary</div>
-            <div className="logo-placeholder">Alberta</div>
-            <div className="logo-placeholder">MRU</div>
-            <div className="logo-placeholder">Lethbridge</div>
+      {/* Main Content */}
+      <main className="pt-32 pb-24">
+        {/* Hero Section */}
+        <section className="container mx-auto px-4 max-w-6xl relative">
+          <motion.div 
+            className="flex flex-col items-center text-center z-10 relative pt-12 pb-20"
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+          >
+            <motion.div variants={fadeUp} className="inline-block px-4 py-1.5 rounded-full border border-brand-chartreuse/30 bg-brand-chartreuse/10 text-brand-chartreuse font-mono text-sm font-medium tracking-wide mb-8">
+              VERITAS AI FOR HIGHER EDUCATION
+            </motion.div>
+            
+            <motion.h1 variants={fadeUp} className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.1] mb-8">
+              We Build <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-chartreuse to-green-400">Academic Trust</span>
+            </motion.h1>
+            
+            <motion.p variants={fadeUp} className="text-xl md:text-2xl text-white/60 max-w-2xl mx-auto mb-10 font-light">
+              Built on pedagogical collaboration. Powered by explainable evidence. Delivering transparent academic integrity.
+            </motion.p>
+            
+            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 justify-center w-full sm:w-auto">
+              <button className="px-8 py-4 bg-brand-chartreuse text-brand-dark font-semibold rounded-lg hover:bg-brand-chartreuseHover transition-colors text-lg shadow-[0_0_20px_rgba(217,241,0,0.3)]">
+                Request Demo
+              </button>
+              <button className="px-8 py-4 bg-transparent border border-white/20 text-white font-semibold rounded-lg hover:bg-white/5 transition-colors text-lg">
+                View Evidence
+              </button>
+            </motion.div>
+          </motion.div>
+        </section>
+
+        {/* Marquee */}
+        <section className="py-12 border-y border-white/5 bg-black/20 overflow-hidden">
+          <div className="container mx-auto px-4 max-w-6xl mb-6">
+            <p className="text-center font-mono text-xs text-white/40 tracking-[0.2em]">UNIVERSITIES BUILD WITH VERITAS</p>
           </div>
-        </motion.div>
-      </motion.section>
-
-      {/* Dashboard Section */}
-      <motion.section 
-        className="container dashboard-section" 
-        id="evidence"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={staggerContainer}
-      >
-        <motion.div className="dashboard-header-text" variants={fadeUp}>
-          <h2>AI Evidence Dashboard</h2>
-          <p>Explore how explainable evidence aids in pedagogical correction over punitive action.</p>
-        </motion.div>
-
-        <motion.div className="dashboard-shell" variants={fadeUp}>
-          {/* Dashboard Tabs */}
-          <div className="dash-tabs">
-            <div className="dash-tab active">
-              <Fingerprint size={16} className="tab-icon-svg" /> Writing DNA
-            </div>
-            <div className="dash-tab">
-              <Search size={16} className="tab-icon-svg" /> AI Categorization
-            </div>
-            <div className="dash-tab">
-              <BookOpen size={16} className="tab-icon-svg" /> Citation Verify
-            </div>
-            <div className="dash-tab">
-              <History size={16} className="tab-icon-svg" /> Evolution History
+          <div className="relative w-full flex overflow-hidden group">
+            <div className="flex w-max animate-marquee-scroll gap-16 px-8 items-center opacity-60 group-hover:opacity-100 transition-opacity">
+               {/* Repeat set 1 */}
+              <div className="font-display font-bold text-2xl tracking-tight">UCalgary</div>
+              <div className="font-display font-bold text-2xl tracking-tight">Alberta</div>
+              <div className="font-display font-bold text-2xl tracking-tight">MRU</div>
+              <div className="font-display font-bold text-2xl tracking-tight">Lethbridge</div>
+              <div className="font-display font-bold text-2xl tracking-tight">Stanford</div>
+              <div className="font-display font-bold text-2xl tracking-tight">MIT</div>
+              {/* Repeat set 2 for seamless scrolling */}
+              <div className="font-display font-bold text-2xl tracking-tight">UCalgary</div>
+              <div className="font-display font-bold text-2xl tracking-tight">Alberta</div>
+              <div className="font-display font-bold text-2xl tracking-tight">MRU</div>
+              <div className="font-display font-bold text-2xl tracking-tight">Lethbridge</div>
+              <div className="font-display font-bold text-2xl tracking-tight">Stanford</div>
+              <div className="font-display font-bold text-2xl tracking-tight">MIT</div>
             </div>
           </div>
+        </section>
 
-          <div className="dash-content">
-            {/* Left Panel */}
-            <div className="dash-left">
-              <h3>
-                Veritas AI uses advanced stylometrics to automatically establish a student's unique baseline. A simple submission is analyzed against their writing DNA, tagged for stylistic shifts, assigned a Confidence Score, and routed to the professor with full explainability.
-              </h3>
-              
-              <div className="dash-controls">
-                <div className="score-block">
-                  <span className="score-label">Confidence Score: 94%</span>
-                  <span className="route-label">Flag: Stylometric Shift</span>
+        {/* Bento Box Grid (Comparison / Features) */}
+        <section className="py-24 container mx-auto px-4 max-w-6xl">
+          <div className="text-center mb-16">
+            <h2 className="font-display text-3xl md:text-5xl font-bold mb-4">Us vs. Them</h2>
+            <p className="text-white/60 text-lg">Why legacy systems fail and how Veritas builds trust.</p>
+          </div>
+
+          <div className="bento-grid">
+            <div className="bento-card col-span-1 md:col-span-2 lg:col-span-2 flex flex-col justify-between group">
+              <div>
+                <div className="flex items-center gap-2 font-mono text-sm text-brand-chartreuse mb-4">
+                  <Fingerprint size={16} /> <span>EVIDENCE / Writing DNA</span>
                 </div>
-                <div className="action-block">
-                  <select className="auto-assign">
-                    <option>Generate Oral Defense</option>
-                    <option>Request Revision</option>
-                  </select>
-                  <button className="btn-send">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <line x1="22" y1="2" x2="11" y2="13"></line>
-                      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                    </svg>
-                  </button>
+                <h3 className="font-display text-2xl font-semibold mb-4 group-hover:text-brand-chartreuse transition-colors">Stylometric Baselines</h3>
+                <p className="text-white/60 mb-6 max-w-lg leading-relaxed">
+                  Veritas AI uses advanced stylometrics to automatically establish a student's unique baseline. A simple submission is analyzed against their writing DNA, tagged for stylistic shifts, and routed with full explainability.
+                </p>
+              </div>
+              <div className="bg-black/30 rounded-lg p-4 border border-white/5 font-mono text-sm mt-4">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-white/40">Confidence Score:</span>
+                  <span className="text-brand-chartreuse">94%</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-white/40">Status:</span>
+                  <span className="text-red-400">Stylometric Shift Detected</span>
                 </div>
               </div>
             </div>
 
-            {/* Right Panel */}
-            <div className="dash-right">
-              <div className="recent-header">
-                <h4>Recent Analysis Flags</h4>
-                <a href="#" className="view-all">View all</a>
+            <div className="bento-card col-span-1 flex flex-col justify-center items-center text-center group">
+              <div className="w-16 h-16 rounded-full bg-brand-chartreuse/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <CheckCircle2 size={32} className="text-brand-chartreuse" />
               </div>
-              
-              <div className="flag-list">
-                <motion.div className="flag-card" whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 400 }}>
-                  <div className="flag-icon bg-blue"><Search size={20}/></div>
-                  <div className="flag-details">
-                    <div className="flag-title-row">
-                      <h5>Stylometric Shift</h5>
-                      <span className="badge badge-medium">MEDIUM</span>
-                    </div>
-                    <p>Chapter 3 • Thesis Submission</p>
-                  </div>
-                </motion.div>
+              <h3 className="font-display text-xl font-semibold mb-2">Pedagogical Correction</h3>
+              <p className="text-white/60 text-sm leading-relaxed">
+                Focus on education over punitive action.
+              </p>
+            </div>
 
-                <motion.div className="flag-card" whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 400 }}>
-                  <div className="flag-icon bg-red"><BookOpen size={20}/></div>
-                  <div className="flag-details">
-                    <div className="flag-title-row">
-                      <h5>Citation Hallucination</h5>
-                      <span className="badge badge-high">HIGH</span>
-                    </div>
-                    <p>Reference 12 • Final Essay</p>
-                  </div>
-                </motion.div>
-
-                <motion.div className="flag-card" whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 400 }}>
-                  <div className="flag-icon bg-green"><Fingerprint size={20}/></div>
-                  <div className="flag-details">
-                    <div className="flag-title-row">
-                      <h5>Co-Creation Approved</h5>
-                      <span className="badge badge-low">LOW</span>
-                    </div>
-                    <p>Draft 1 • Cited properly</p>
-                  </div>
-                </motion.div>
+            <div className="bento-card col-span-1">
+              <div className="flex items-center gap-2 font-mono text-sm text-brand-chartreuse mb-4">
+                <Search size={16} /> <span>Deep Scan</span>
               </div>
+              <h3 className="font-display text-xl font-semibold mb-2">AI Categorization</h3>
+              <p className="text-white/60 text-sm leading-relaxed">Detecting subtle patterns of synthetic text generation.</p>
+            </div>
 
-              <div className="dash-footer-link">
-                <span>Want to integrate this via API?</span>
-                <a href="#">Get API Keys</a>
+            <div className="bento-card col-span-1 md:col-span-2 bg-gradient-to-br from-white/5 to-brand-chartreuse/5 relative overflow-hidden group">
+              <div className="relative z-10">
+                <div className="flex items-center gap-2 font-mono text-sm text-brand-chartreuse mb-4">
+                  <BookOpen size={16} /> <span>Citation Verify</span>
+                </div>
+                <h3 className="font-display text-2xl font-semibold mb-2">Eliminate Hallucinations</h3>
+                <p className="text-white/60 text-sm mb-6 max-w-md leading-relaxed">
+                  Automatically checks all references against scholarly databases to flag non-existent or hallucinated citations.
+                </p>
+                <button className="text-sm font-semibold text-white group-hover:text-brand-chartreuse transition-colors flex items-center gap-2">
+                  Learn how <ChevronDown className="-rotate-90" size={16} />
+                </button>
               </div>
             </div>
           </div>
-        </motion.div>
-      </motion.section>
+        </section>
+
+        {/* Draggable Showcase */}
+        <section className="py-24 border-y border-white/5 bg-white/[0.02] overflow-hidden">
+          <div className="container mx-auto px-4 max-w-6xl mb-12">
+            <h2 className="font-display text-3xl md:text-5xl font-bold mb-4">Evidence Dashboard</h2>
+            <p className="text-white/60 text-lg">Grab and drag to explore the analysis modules.</p>
+          </div>
+          
+          <div className="pl-4 md:pl-[calc((100vw-72rem)/2+1rem)]">
+            <motion.div 
+              className="flex gap-6 cursor-grab active:cursor-grabbing pb-8"
+              drag="x"
+              dragConstraints={{ right: 0, left: -800 }}
+            >
+              {[
+                { title: 'Stylometric Shift', status: 'MEDIUM', icon: Search, color: 'text-blue-400', bg: 'bg-blue-400/10' },
+                { title: 'Citation Hallucination', status: 'HIGH', icon: BookOpen, color: 'text-red-400', bg: 'bg-red-400/10' },
+                { title: 'Co-Creation Approved', status: 'LOW', icon: Fingerprint, color: 'text-brand-chartreuse', bg: 'bg-brand-chartreuse/10' },
+                { title: 'Evolution History', status: 'INFO', icon: History, color: 'text-purple-400', bg: 'bg-purple-400/10' },
+              ].map((flag, idx) => (
+                <motion.div 
+                  key={idx}
+                  className="min-w-[300px] sm:min-w-[400px] bento-card flex-shrink-0 select-none"
+                  whileHover={{ scale: 1.02, backgroundColor: 'rgba(255,255,255,0.08)' }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                >
+                  <div className="flex items-start justify-between mb-8">
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${flag.bg}`}>
+                      <flag.icon size={24} className={flag.color} />
+                    </div>
+                    <span className="px-3 py-1 text-xs font-mono font-semibold rounded-full border border-white/10 bg-white/5 tracking-wider">
+                      {flag.status}
+                    </span>
+                  </div>
+                  <h4 className="font-display text-xl font-semibold mb-2">{flag.title}</h4>
+                  <p className="text-white/40 text-sm font-mono">Module / {String(idx + 1).padStart(2, '0')}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Curriculum Accordion */}
+        <section className="py-24 container mx-auto px-4 max-w-3xl">
+          <div className="text-center mb-16">
+            <h2 className="font-display text-3xl md:text-5xl font-bold mb-4">Deep Dive</h2>
+            <p className="text-white/60 text-lg">The science behind our evidence engine.</p>
+          </div>
+
+          <div className="space-y-4">
+            {[
+              { week: '01', title: 'Stylometric Baselines & Analysis', content: 'Learn to extract features from text and establish a baseline for individual student writing styles.' },
+              { week: '02', title: 'Detecting Synthetic Generation', content: 'Deep dive into LLM detection strategies, perplexity analysis, and burstiness metrics.' },
+              { week: '03', title: 'Citation Verification Engine', content: 'Building an automated scraper and verifier to cross-reference academic citations.' },
+              { week: '04', title: 'Pedagogical Dashboards', content: 'Constructing the professor-facing UI to present explainable evidence clearly.' }
+            ].map((item, idx) => (
+              <div key={idx} className="border border-white/10 rounded-xl overflow-hidden bg-white/5 backdrop-blur-sm transition-colors hover:border-white/20">
+                <button 
+                  className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/5 transition-colors outline-none focus:ring-2 focus:ring-brand-chartreuse/50 rounded-xl"
+                  onClick={() => setActiveAccordion(activeAccordion === idx ? null : idx)}
+                >
+                  <div className="flex items-center gap-6">
+                    <span className="font-mono text-brand-chartreuse text-sm">WK. {item.week}</span>
+                    <span className="font-display text-lg font-medium">{item.title}</span>
+                  </div>
+                  <motion.div
+                    animate={{ rotate: activeAccordion === idx ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <ChevronDown size={20} className="text-white/40" />
+                  </motion.div>
+                </button>
+                <motion.div 
+                  initial={false}
+                  animate={{ height: activeAccordion === idx ? 'auto' : 0, opacity: activeAccordion === idx ? 1 : 0 }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-6 pb-6 pt-2 text-white/60 border-t border-white/5 ml-16 leading-relaxed text-sm">
+                    {item.content}
+                  </div>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+      </main>
 
       {/* Production Ready Footer */}
       <PublicFooter />
