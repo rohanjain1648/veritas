@@ -187,7 +187,6 @@ export function ProfessorDashboard() {
           {statusMsg}
         </div>
       )}
-      </motion.div>
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="dash-grid">
         {/* Metric Cards */}
