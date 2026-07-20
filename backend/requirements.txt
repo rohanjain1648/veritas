@@ -14,3 +14,4 @@ sentence-transformers
 pytest
 httpx
 locust
+python-multipart
